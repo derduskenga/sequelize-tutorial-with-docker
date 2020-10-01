@@ -1,0 +1,20 @@
+version: 'x'
+
+services:
+    web:
+        depends_on:
+            - database
+        #build the Dockerfile in the current directory
+        build: .
+        ports: 
+            - "3000:3000"
+        links: database
+    database:
+        image: mysql
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: your password here
+            MYSQL_ALLOW_EMPTY_PASSWORD: yes
+            MYSQL_DATABASE: decoded
+    
+
