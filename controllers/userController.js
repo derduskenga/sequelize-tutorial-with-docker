@@ -24,7 +24,7 @@ exports.getPost = (req, res, next) =>{
             attributes: ['id','tag_text']
         }]
     }).then (result=>{
-        res.status(200).send(result);
+        res.status(200).send({"data" : result});
     }).catch (error=>{
         console.log(error)
         res.status(500).send(error);

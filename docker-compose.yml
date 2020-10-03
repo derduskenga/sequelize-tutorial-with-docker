@@ -1,20 +1,27 @@
-version: 'x'
+version: '3.8'
 
 services:
+    dbservice:
+        image: mysql
+        restart: always
+        ports: 
+            - 3305:3305
+        command: --default-authentication-plugin=mysql_native_password
+        environment: 
+            MYSQL_ROOT_PASSWORD: 1234567890
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            MYSQL_DATABASE: decoded
     web:
         depends_on:
-            - database
+            - dbservice
         #build the Dockerfile in the current directory
         build: .
         ports: 
-            - "3000:3000"
-        links: database
-    database:
-        image: mysql
-        restart: always
+            - 3000:80
         environment: 
-            MYSQL_ROOT_PASSWORD: your password here
-            MYSQL_ALLOW_EMPTY_PASSWORD: yes
-            MYSQL_DATABASE: decoded
+            - DATABASE_HOST=dbservice
+
+        #command: npx sequelize-cli db:migrate
+
     
 
